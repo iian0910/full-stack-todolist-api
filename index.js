@@ -28,8 +28,6 @@ async function connectToDatabase() {
 
 app.get('/api/todo_app/GetNote', async(request, response) => {
   try {
-    await connectToDatabase()
-
     const result = await database.collection('todo_app_collection').find({}).toArray()
     response.send(result)
   } catch (err) {
@@ -39,8 +37,6 @@ app.get('/api/todo_app/GetNote', async(request, response) => {
 
 app.post('/api/todo_app/AddNote', multer().none(), async(request,response)=>{
   try {
-    await connectToDatabase()
-
     const numOfDocs = await database.collection('todo_app_collection').countDocuments()
     await database.collection('todo_app_collection').insertOne({
       id: (numOfDocs + 1).toString(),
@@ -61,5 +57,6 @@ app.delete('/api/todo_app/DeleteNote',(request,response)=>{
 })
 
 app.listen(PORT, async () => {
+  await connectToDatabase()
   console.log(`Server is running on port ${PORT}`)
 })
