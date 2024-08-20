@@ -8,7 +8,7 @@ app.use(cors())
 
 // Mongodb 設定
 var CONNECTION_STRING = 'mongodb+srv://ianFan:ianFan@cluster0.ofmahog.mongodb.net/todo_app'
-var PORT = 5038
+var PORT = process.env.PORT || 5038
 var database
 
 async function connectToDatabase() {
@@ -22,11 +22,6 @@ async function connectToDatabase() {
     console.error('Failed to connect to MongoDB', error)
   }
 }
-
-app.listen(PORT, async () => {
-  await connectToDatabase()
-  console.log(`Server is running on port ${PORT}`)
-})
 
 app.get('/api/todo_app/GetNote', async(request, response) => {
   try {
@@ -64,4 +59,9 @@ app.delete('/api/todo_app/DeleteNote',(request,response)=>{
     id:request.query.id
   });
   response.json("Delete Successfully")
+})
+
+app.listen(PORT, async () => {
+  await connectToDatabase()
+  console.log(`Server is running on port ${PORT}`)
 })
