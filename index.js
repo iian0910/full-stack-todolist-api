@@ -7,7 +7,7 @@ const app = Express()
 app.use(cors())
 
 // Mongodb 設定
-var CONNECTION_STRING = 'mongodb+srv://ianFan:ianFan@cluster0.ofmahog.mongodb.net/todo_app'
+var CONNECTION_STRING = process.env.CONNECTION_STRING
 var PORT = process.env.PORT || 5038
 let client
 let database
