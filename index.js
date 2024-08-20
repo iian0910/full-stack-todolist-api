@@ -27,6 +27,8 @@ async function connectToDatabase() {
 }
 
 app.get('/api/todo_app/GetNote', async(request, response) => {
+  await connectToDatabase()
+
   try {
     const result = await database.collection('todo_app_collection').find({}).toArray()
     response.send(result)
@@ -56,7 +58,6 @@ app.delete('/api/todo_app/DeleteNote',(request,response)=>{
   response.json("Delete Successfully")
 })
 
-app.listen(PORT, async () => {
-  await connectToDatabase()
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
