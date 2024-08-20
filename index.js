@@ -31,7 +31,7 @@ app.get('/api/todo_app/GetNote', async(request, response) => {
 
   try {
     const result = await database.collection('todo_app_collection').find({}).toArray()
-    response.send({
+    response.json({
       success: true,
       data: result,
       message: 'get list successfully'
