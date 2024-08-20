@@ -31,7 +31,11 @@ app.get('/api/todo_app/GetNote', async(request, response) => {
 
   try {
     const result = await database.collection('todo_app_collection').find({}).toArray()
-    response.send(result)
+    response.send({
+      success: true,
+      data: result,
+      message: 'get list successfully'
+    })
   } catch (err) {
     response.status(500).send(`Error: ${err}`)
   }
@@ -45,7 +49,10 @@ app.post('/api/todo_app/AddNote', multer().none(), async(request,response)=>{
       description: request.body.newNotes
     })
 
-    response.json('Add Successfully')
+    response.json({
+      success: true,
+      message: 'add todo successfully'
+    })
   } catch (err) {
     response.status(500).json(`Error: ${error.message}`)
   }
@@ -55,7 +62,10 @@ app.delete('/api/todo_app/DeleteNote',(request,response)=>{
   database.collection('todo_app_collection').deleteOne({
     id:request.query.id
   });
-  response.json("Delete Successfully")
+  response.json({
+    success: true,
+    message: 'delete todo successfully'
+  })
 })
 
 app.listen(PORT, () => {
